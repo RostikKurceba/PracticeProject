@@ -2,28 +2,31 @@ window.onload = () => {
     initHome(renderSearch);
 };
 
-function renderSearch() {
+function renderSearch(){
 
     const container =
         document.getElementById("searchContainer");
 
     container.innerHTML = `
+
         <input
-            type="text"
             id="subjectInput"
+            type="text"
             placeholder="Пошук викладача / консультації...">
 
         <button id="searchButton">
             Знайти
         </button>
+
     `;
 
     document
         .getElementById("searchButton")
-        .addEventListener("click", searchTeachers);
+        .onclick = searchTeachers;
+
 }
 
-async function searchTeachers() {
+async function searchTeachers(){
 
     const subject =
         document
@@ -31,9 +34,12 @@ async function searchTeachers() {
             .value
             .trim();
 
-    if (subject === "") {
+    if(subject===""){
+
         alert("Введіть предмет");
+
         return;
+
     }
 
     const response =
@@ -41,9 +47,12 @@ async function searchTeachers() {
             `${API_URL}/teachers/search?subject=${encodeURIComponent(subject)}`
         );
 
-    if (!response.ok) {
+    if(!response.ok){
+
         alert("Помилка пошуку");
+
         return;
+
     }
 
     const teachers = await response.json();
@@ -53,32 +62,41 @@ async function searchTeachers() {
 
     result.innerHTML = "";
 
-    if (teachers.length === 0) {
-        result.innerHTML = `
-            <div class="not-found">
-                Викладачів не знайдено
-            </div>
-        `;
+    if(teachers.length===0){
+
+        result.innerHTML =
+
+            "<p>Викладачів не знайдено.</p>";
+
         return;
+
     }
 
-    teachers.forEach(teacher => {
+    teachers.forEach(teacher=>{
 
         result.innerHTML += `
-            <button class="teacher-card"
-                    onclick="openTeacher(${teacher.id})">
 
-                <div class="teacher-name">
-                    ${teacher.lastName} ${teacher.initials}
-                </div>
+            <button
+                class="teacher-card"
+                onclick="openTeacher(${teacher.id})">
 
-                <div class="teacher-subject">
-                    ${teacher.subject}
-                </div>
+                <strong>
+
+                    ${teacher.lastName}
+                    ${teacher.initials}
+
+                </strong>
+
+                <br>
+
+                ${teacher.subject}
 
             </button>
+
         `;
+
     });
+
 }
 
 function openTeacher(id) {

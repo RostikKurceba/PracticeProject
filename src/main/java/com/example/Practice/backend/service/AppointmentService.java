@@ -29,24 +29,32 @@ public class AppointmentService {
     }
 
     /* =========================
-       GET TEACHER CALENDAR
+       КАЛЕНДАР ВИКЛАДАЧА
        ========================= */
+
     public List<AppointmentDTO> getTeacherCalendar(Long teacherId) {
 
-        List<Appointment> list =
+        List<Appointment> appointments =
                 appointmentRepo.findByTeacherId(teacherId);
 
         List<AppointmentDTO> result = new ArrayList<>();
 
-        for (Appointment a : list) {
+        for (Appointment appointment : appointments) {
 
             result.add(new AppointmentDTO(
-                    a.id,
-                    a.teacher.id,
-                    a.student != null ? a.student.id : null,
-                    a.consultationDay,
-                    a.consultationTime,
-                    a.status
+
+                    appointment.id,
+
+                    appointment.teacher.id,
+
+                    appointment.student == null ? null : appointment.student.id,
+
+                    appointment.consultationDay,
+
+                    appointment.consultationTime,
+
+                    appointment.status
+
             ));
         }
 
@@ -54,98 +62,92 @@ public class AppointmentService {
     }
 
     /* =========================
-       CREATE FREE SLOT (teacher)
+       ЗАПИС НА КОНСУЛЬТАЦІЮ
        ========================= */
-    public AppointmentDTO createSlot(Long teacherId,
-                                     String day,
-                                     String time) {
 
-        Teacher teacher =
-                teacherRepo.findById(teacherId)
-                        .orElseThrow(() -> new RuntimeException("Teacher not found"));
-
-        Appointment appointment = new Appointment();
-
-        appointment.teacher = teacher;
-        appointment.consultationDay = day;
-        appointment.consultationTime = time;
-        appointment.status = "FREE";
-
-        appointmentRepo.save(appointment);
-
-        return new AppointmentDTO(
-                appointment.id,
-                teacherId,
-                null,
-                day,
-                time,
-                "FREE"
-        );
-    }
-
-    /* =========================
-       BOOK APPOINTMENT (student)
-       ========================= */
     public AppointmentDTO bookAppointment(Long teacherId,
                                           Long studentId,
                                           String day,
                                           String time) {
 
-        Appointment appointment =
-                appointmentRepo
-                        .findByTeacherIdAndConsultationDayAndConsultationTime(
-                                teacherId,
-                                day,
-                                time
-                        )
-                        .orElseThrow(() ->
-                                new RuntimeException("Slot not found"));
+        if (appointmentRepo
+                .findByTeacherIdAndConsultationDayAndConsultationTime(
+                        teacherId,
+                        day,
+                        time
+                ).isPresent()) {
 
-        if (!"FREE".equals(appointment.status)) {
-            throw new RuntimeException("Already booked");
+            throw new RuntimeException("This time is already booked");
         }
+
+        Teacher teacher =
+                teacherRepo.findById(teacherId)
+                        .orElseThrow(() ->
+                                new RuntimeException("Teacher not found"));
 
         Student student =
                 studentRepo.findById(studentId)
-                        .orElseThrow(() -> new RuntimeException("Student not found"));
+                        .orElseThrow(() ->
+                                new RuntimeException("Student not found"));
 
+        Appointment appointment = new Appointment();
+
+        appointment.teacher = teacher;
         appointment.student = student;
+        appointment.consultationDay = day;
+        appointment.consultationTime = time;
         appointment.status = "BOOKED";
 
         appointmentRepo.save(appointment);
 
         return new AppointmentDTO(
+
                 appointment.id,
-                teacherId,
-                studentId,
+
+                teacher.id,
+
+                student.id,
+
                 day,
+
                 time,
+
                 "BOOKED"
+
         );
     }
 
     /* =========================
-       GET STUDENT APPOINTMENTS
+       МОЇ КОНСУЛЬТАЦІЇ
        ========================= */
+
     public List<AppointmentDTO> getStudentAppointments(Long studentId) {
 
-        List<Appointment> list =
+        List<Appointment> appointments =
                 appointmentRepo.findByStudentId(studentId);
 
         List<AppointmentDTO> result = new ArrayList<>();
 
-        for (Appointment a : list) {
+        for (Appointment appointment : appointments) {
 
             result.add(new AppointmentDTO(
-                    a.id,
-                    a.teacher.id,
-                    studentId,
-                    a.consultationDay,
-                    a.consultationTime,
-                    a.status
+
+                    appointment.id,
+
+                    appointment.teacher.id,
+
+                    appointment.student == null ? null : appointment.student.id,
+
+                    appointment.consultationDay,
+
+                    appointment.consultationTime,
+
+                    appointment.status
+
             ));
         }
 
         return result;
     }
+
 }

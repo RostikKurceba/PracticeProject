@@ -17,9 +17,6 @@ public class AppointmentController {
         this.service = service;
     }
 
-    /* =========================
-       GET TEACHER CALENDAR
-       ========================= */
     @GetMapping("/teacher/{teacherId}")
     public List<AppointmentDTO> getTeacherCalendar(
             @PathVariable Long teacherId
@@ -27,21 +24,6 @@ public class AppointmentController {
         return service.getTeacherCalendar(teacherId);
     }
 
-    /* =========================
-       CREATE SLOT (teacher)
-       ========================= */
-    @PostMapping("/create")
-    public AppointmentDTO createSlot(
-            @RequestParam Long teacherId,
-            @RequestParam String day,
-            @RequestParam String time
-    ) {
-        return service.createSlot(teacherId, day, time);
-    }
-
-    /* =========================
-       BOOK SLOT (student)
-       ========================= */
     @PostMapping("/book")
     public AppointmentDTO book(
             @RequestParam Long teacherId,
@@ -57,9 +39,6 @@ public class AppointmentController {
         );
     }
 
-    /* =========================
-       STUDENT APPOINTMENTS
-       ========================= */
     @GetMapping("/student/{studentId}")
     public List<AppointmentDTO> getStudentAppointments(
             @PathVariable Long studentId

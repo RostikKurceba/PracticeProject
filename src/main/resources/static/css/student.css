@@ -109,3 +109,47 @@ th{
     background:#1976d2;
     color:white;
 }
+
+#searchResult{
+
+    margin:10px 15px;
+
+}
+
+.teacher-card{
+
+    width:300px;
+
+    display:block;
+
+    margin-bottom:10px;
+
+    padding:12px;
+
+    text-align:left;
+
+    border:none;
+
+    border-radius:6px;
+
+    background:white;
+
+    cursor:pointer;
+
+    box-shadow:0 2px 5px rgba(0,0,0,.1);
+
+}
+
+.teacher-card:hover{
+
+    background:#eaf3ff;
+
+}
+
+.not-found{
+
+    padding:10px;
+
+    color:#888;
+
+}

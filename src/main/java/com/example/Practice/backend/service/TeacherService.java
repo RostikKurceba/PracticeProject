@@ -4,6 +4,7 @@ import com.example.Practice.backend.dto.TeacherDTO;
 import com.example.Practice.backend.entity.Teacher;
 import com.example.Practice.backend.repository.TeacherRepository;
 import org.springframework.stereotype.Service;
+import com.example.Practice.backend.dto.TeacherProfileDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,28 @@ public class TeacherService {
         }
 
         return result;
+
+    }
+
+    public TeacherProfileDTO getTeacher(Long id){
+
+        Teacher teacher = repository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Teacher not found"));
+
+        return new TeacherProfileDTO(
+
+                teacher.id,
+
+                teacher.lastName,
+
+                teacher.firstName,
+
+                teacher.middleName,
+
+                teacher.subject
+
+        );
 
     }
 
