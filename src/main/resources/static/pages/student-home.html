@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Головна студент</title>
+    <link rel="stylesheet" href="../css/student.css">
+</head>
+
+<body>
+
+<div class="top-bar">
+
+    <!-- ЛІВОРУЧ: вихід -->
+    <button class="logout-btn" onclick="logout()">Вихід</button>
+
+    <!-- СЕРЕДИНА: тиждень -->
+    <div class="week-nav">
+
+        <button id="prevWeek" onclick="changeWeek(-1)">◀</button>
+
+        <div id="weekLabel"></div>
+
+        <button id="nextWeek" onclick="changeWeek(1)">▶</button>
+
+    </div>
+
+    <!-- ПРАВОРУЧ: користувач -->
+    <div id="userLabel"></div>
+
+</div>
+
+<!-- ТІЛЬКИ ДЛЯ СТУДЕНТА -->
+<div id="searchContainer" class="student-search"></div>
+
+<!-- КАЛЕНДАР -->
+<div class="table-wrapper">
+    <table id="calendar"></table>
+</div>
+
+<script src="../js/home.js"></script>
+<script src="../js/student.js"></script>
+
+</body>
+</html>

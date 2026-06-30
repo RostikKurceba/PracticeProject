@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Головна викладач</title>
+    <link rel="stylesheet" href="../css/teacher.css">
+</head>
+
+<body>
+
+<div class="top-bar">
+
+    <button class="logout-btn" onclick="logout()">Вихід</button>
+
+    <div class="week-nav">
+
+        <button id="prevWeek" onclick="changeWeek(-1)">◀</button>
+
+        <div id="weekLabel"></div>
+
+        <button id="nextWeek">▶</button>
+
+    </div>
+
+    <div id="userLabel"></div>
+
+</div>
+
+<!-- ВИКЛАДАЧ: верх пустий (як ти хотів) -->
+
+<div class="table-wrapper">
+    <table id="calendar"></table>
+</div>
+
+<script src="../js/home.js"></script>
+<script src="../js/teacher.js"></script>
+
+</body>
+</html>
