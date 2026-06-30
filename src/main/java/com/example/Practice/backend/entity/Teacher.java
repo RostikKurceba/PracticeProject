@@ -1,23 +1,23 @@
 package com.example.Practice.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 
 @Entity
 @Table(name = "teachers")
-@Data
 public class Teacher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
 
-    private String lastName;
-    private String firstName;
-    private String middleName;
+    public String lastName;
+    public String firstName;
+    public String middleName;
 
-    private String email;
-    private String password;
+    @Column(unique = true)
+    public String email;
 
-    private String subject;
+    public String password;
+
+    public String subject;
 }

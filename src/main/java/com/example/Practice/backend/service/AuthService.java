@@ -1,69 +1,104 @@
 package com.example.Practice.backend.service;
 
+import com.example.Practice.backend.dto.AuthResponse;
 import com.example.Practice.backend.dto.LoginRequest;
 import com.example.Practice.backend.dto.RegisterRequest;
 import com.example.Practice.backend.entity.Student;
 import com.example.Practice.backend.entity.Teacher;
 import com.example.Practice.backend.repository.StudentRepository;
 import com.example.Practice.backend.repository.TeacherRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class AuthService {
 
-    @Autowired
-    private StudentRepository studentRepo;
+    private final StudentRepository studentRepo;
+    private final TeacherRepository teacherRepo;
 
-    @Autowired
-    private TeacherRepository teacherRepo;
+    public AuthService(StudentRepository studentRepo,
+                       TeacherRepository teacherRepo) {
+        this.studentRepo = studentRepo;
+        this.teacherRepo = teacherRepo;
+    }
 
-    // ---------- REGISTER ----------
-    public Object register(String role, RegisterRequest req) {
+    public AuthResponse register(RegisterRequest req) {
 
-        if (role.equals("student")) {
+        String token = UUID.randomUUID().toString();
+
+        if (req.role.equals("student")) {
 
             Student s = new Student();
-            s.setLastName(req.lastName);
-            s.setFirstName(req.firstName);
-            s.setMiddleName(req.middleName);
-            s.setEmail(req.email);
-            s.setPassword(req.password);
+            s.firstName = req.firstName;
+            s.lastName = req.lastName;
+            s.middleName = req.middleName;
+            s.email = req.email;
+            s.password = req.password;
 
-            return studentRepo.save(s);
+            studentRepo.save(s);
+
+            return new AuthResponse(
+                    token,
+                    "student",
+                    s.lastName,
+                    s.firstName,
+                    s.middleName
+            );
         }
 
         Teacher t = new Teacher();
-        t.setLastName(req.lastName);
-        t.setFirstName(req.firstName);
-        t.setMiddleName(req.middleName);
-        t.setEmail(req.email);
-        t.setPassword(req.password);
-        t.setSubject(req.subject);
+        t.firstName = req.firstName;
+        t.lastName = req.lastName;
+        t.middleName = req.middleName;
+        t.email = req.email;
+        t.password = req.password;
+        t.subject = req.subject;
 
-        return teacherRepo.save(t);
+        teacherRepo.save(t);
+
+        return new AuthResponse(
+                token,
+                "teacher",
+                t.lastName,
+                t.firstName,
+                t.middleName
+        );
     }
 
-    // ---------- LOGIN ----------
-    public Object login(String role, LoginRequest req) {
+    public AuthResponse login(LoginRequest req, String role) {
+
+        String token = UUID.randomUUID().toString();
 
         if (role.equals("student")) {
 
             Student s = studentRepo.findByEmail(req.email)
-                    .orElseThrow(() -> new RuntimeException("No user"));
+                    .orElseThrow(() -> new RuntimeException("Not found"));
 
-            if (!s.getPassword().equals(req.password))
+            if (!s.password.equals(req.password))
                 throw new RuntimeException("Wrong password");
 
-            return s;
+            return new AuthResponse(
+                    token,
+                    "student",
+                    s.lastName,
+                    s.firstName,
+                    s.middleName
+            );
         }
 
         Teacher t = teacherRepo.findByEmail(req.email)
-                .orElseThrow(() -> new RuntimeException("No user"));
+                .orElseThrow(() -> new RuntimeException("Not found"));
 
-        if (!t.getPassword().equals(req.password))
+        if (!t.password.equals(req.password))
             throw new RuntimeException("Wrong password");
 
-        return t;
+        return new AuthResponse(
+                token,
+                "teacher",
+                t.lastName,
+                t.firstName,
+                t.middleName
+        );
     }
 }
