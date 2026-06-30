@@ -8,14 +8,19 @@ const hours = [
 
 /* INIT (спільний старт) */
 function initHome(extraInit){
+
     renderUser();
-    renderCalendar();
+
     renderWeek();
+
+    renderCalendar();
+
     updateButtons();
 
-    if (typeof extraInit === "function") {
+    if(typeof extraInit==="function"){
         extraInit();
     }
+
 }
 
 /* USER NAME */
@@ -63,10 +68,17 @@ function renderWeek(){
 
 /* WEEK NAV */
 function changeWeek(dir){
+
     if (weekOffset + dir < 0) return;
+
     weekOffset += dir;
+
     renderWeek();
+
+    renderCalendar();
+
     updateButtons();
+
 }
 
 function updateButtons(){
