@@ -63,6 +63,7 @@ document.querySelector("button").addEventListener("click", async () => {
 
     // 💾 зберігаємо як після логіну
     localStorage.setItem("token", data.token);
+    localStorage.setItem("userId", data.id);
     localStorage.setItem("role", data.role);
     localStorage.setItem("lastName", data.lastName);
     localStorage.setItem("firstName", data.firstName);

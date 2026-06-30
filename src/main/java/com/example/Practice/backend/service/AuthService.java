@@ -39,6 +39,7 @@ public class AuthService {
             studentRepo.save(s);
 
             return new AuthResponse(
+                    s.id,
                     token,
                     "student",
                     s.lastName,
@@ -58,6 +59,7 @@ public class AuthService {
         teacherRepo.save(t);
 
         return new AuthResponse(
+                t.id,
                 token,
                 "teacher",
                 t.lastName,
@@ -79,6 +81,7 @@ public class AuthService {
                 throw new RuntimeException("Wrong password");
 
             return new AuthResponse(
+                    s.id,
                     token,
                     "student",
                     s.lastName,
@@ -94,6 +97,7 @@ public class AuthService {
             throw new RuntimeException("Wrong password");
 
         return new AuthResponse(
+                t.id,
                 token,
                 "teacher",
                 t.lastName,

@@ -49,6 +49,7 @@ document.getElementById("loginButton").addEventListener("click", async () => {
 
     // 💾 збереження користувача
     localStorage.setItem("token", data.token);
+    localStorage.setItem("userId", data.id);
     localStorage.setItem("role", data.role);
     localStorage.setItem("lastName", data.lastName);
     localStorage.setItem("firstName", data.firstName);
