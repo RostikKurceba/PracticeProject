@@ -61,7 +61,7 @@ document.querySelector("button").addEventListener("click", async () => {
 
     const data = await response.json();
 
-    // 💾 зберігаємо як після логіну
+    // зберігаємо
     localStorage.setItem("token", data.token);
     localStorage.setItem("userId", data.id);
     localStorage.setItem("role", data.role);
@@ -69,7 +69,6 @@ document.querySelector("button").addEventListener("click", async () => {
     localStorage.setItem("firstName", data.firstName);
     localStorage.setItem("middleName", data.middleName);
 
-    // 🚀 РЕДІРЕКТ
     if (data.role === "student") {
         location.href = "student-home.html";
     } else {

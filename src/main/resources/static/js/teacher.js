@@ -1,3 +1,5 @@
-window.onload = () => {
-    initHome();
+window.onload = async () => {
+
+    await initHome();
+
 };

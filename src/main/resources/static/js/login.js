@@ -47,7 +47,7 @@ document.getElementById("loginButton").addEventListener("click", async () => {
 
     const data = await response.json();
 
-    // 💾 збереження користувача
+    // збереження користувача
     localStorage.setItem("token", data.token);
     localStorage.setItem("userId", data.id);
     localStorage.setItem("role", data.role);
@@ -55,7 +55,6 @@ document.getElementById("loginButton").addEventListener("click", async () => {
     localStorage.setItem("firstName", data.firstName);
     localStorage.setItem("middleName", data.middleName);
 
-    // 🚀 РЕДІРЕКТ
     if (data.role === "student") {
         location.href = "student-home.html";
     } else {

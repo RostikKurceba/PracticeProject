@@ -37,10 +37,6 @@ function goBack(){
 
 }
 
-/* ===========================
-   ВИКЛАДАЧ
-=========================== */
-
 async function loadTeacherInfo(){
 
     const response =
@@ -61,10 +57,6 @@ async function loadTeacherInfo(){
         `${teacher.lastName} ${teacher.firstName} ${teacher.middleName} • ${teacher.subject}`;
 
 }
-
-/* ===========================
-   КАЛЕНДАР
-=========================== */
 
 async function loadCalendar(){
 
@@ -140,10 +132,6 @@ function renderCalendar(appointments){
     table.innerHTML = html;
 
 }
-
-/* ===========================
-   ЗАПИС
-=========================== */
 
 async function book(day,time){
 

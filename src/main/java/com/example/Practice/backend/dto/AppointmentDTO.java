@@ -14,6 +14,12 @@ public class AppointmentDTO {
 
     public String status;
 
+    // Для головної сторінки студента
+    public String teacherName;
+
+    // Для головної сторінки викладача
+    public String studentName;
+
     public AppointmentDTO() {
     }
 
@@ -23,7 +29,9 @@ public class AppointmentDTO {
             Long studentId,
             String consultationDay,
             String consultationTime,
-            String status
+            String status,
+            String teacherName,
+            String studentName
     ) {
 
         this.id = id;
@@ -35,6 +43,8 @@ public class AppointmentDTO {
 
         this.status = status;
 
+        this.teacherName = teacherName;
+        this.studentName = studentName;
     }
 
 }

@@ -19,18 +19,16 @@ public class AppointmentService {
     private final TeacherRepository teacherRepo;
     private final StudentRepository studentRepo;
 
-    public AppointmentService(AppointmentRepository appointmentRepo,
-                              TeacherRepository teacherRepo,
-                              StudentRepository studentRepo) {
+    public AppointmentService(
+            AppointmentRepository appointmentRepo,
+            TeacherRepository teacherRepo,
+            StudentRepository studentRepo
+    ) {
 
         this.appointmentRepo = appointmentRepo;
         this.teacherRepo = teacherRepo;
         this.studentRepo = studentRepo;
     }
-
-    /* =========================
-       КАЛЕНДАР ВИКЛАДАЧА
-       ========================= */
 
     public List<AppointmentDTO> getTeacherCalendar(Long teacherId) {
 
@@ -41,41 +39,61 @@ public class AppointmentService {
 
         for (Appointment appointment : appointments) {
 
-            result.add(new AppointmentDTO(
+            String studentName = "";
 
-                    appointment.id,
+            if (appointment.student != null) {
 
-                    appointment.teacher.id,
+                studentName =
+                        appointment.student.lastName + " "
+                                + appointment.student.firstName.substring(0, 1) + "."
+                                + appointment.student.middleName.substring(0, 1) + ".";
+            }
 
-                    appointment.student == null ? null : appointment.student.id,
+            result.add(
 
-                    appointment.consultationDay,
+                    new AppointmentDTO(
 
-                    appointment.consultationTime,
+                            appointment.id,
 
-                    appointment.status
+                            appointment.teacher.id,
 
-            ));
+                            appointment.student == null
+                                    ? null
+                                    : appointment.student.id,
+
+                            appointment.consultationDay,
+
+                            appointment.consultationTime,
+
+                            appointment.status,
+
+                            null,
+
+                            studentName
+
+                    )
+
+            );
+
         }
 
         return result;
     }
 
-    /* =========================
-       ЗАПИС НА КОНСУЛЬТАЦІЮ
-       ========================= */
-
-    public AppointmentDTO bookAppointment(Long teacherId,
-                                          Long studentId,
-                                          String day,
-                                          String time) {
+    public AppointmentDTO bookAppointment(
+            Long teacherId,
+            Long studentId,
+            String day,
+            String time
+    ) {
 
         if (appointmentRepo
                 .findByTeacherIdAndConsultationDayAndConsultationTime(
                         teacherId,
                         day,
                         time
-                ).isPresent()) {
+                )
+                .isPresent()) {
 
             throw new RuntimeException("This time is already booked");
         }
@@ -94,11 +112,23 @@ public class AppointmentService {
 
         appointment.teacher = teacher;
         appointment.student = student;
+
         appointment.consultationDay = day;
         appointment.consultationTime = time;
+
         appointment.status = "BOOKED";
 
         appointmentRepo.save(appointment);
+
+        String teacherName =
+                teacher.lastName + " "
+                        + teacher.firstName.substring(0, 1) + "."
+                        + teacher.middleName.substring(0, 1) + ".";
+
+        String studentName =
+                student.lastName + " "
+                        + student.firstName.substring(0, 1) + "."
+                        + student.middleName.substring(0, 1) + ".";
 
         return new AppointmentDTO(
 
@@ -112,14 +142,14 @@ public class AppointmentService {
 
                 time,
 
-                "BOOKED"
+                "BOOKED",
+
+                teacherName,
+
+                studentName
 
         );
     }
-
-    /* =========================
-       МОЇ КОНСУЛЬТАЦІЇ
-       ========================= */
 
     public List<AppointmentDTO> getStudentAppointments(Long studentId) {
 
@@ -130,21 +160,35 @@ public class AppointmentService {
 
         for (Appointment appointment : appointments) {
 
-            result.add(new AppointmentDTO(
+            String teacherName =
+                    appointment.teacher.lastName + " "
+                            + appointment.teacher.firstName.substring(0, 1) + "."
+                            + appointment.teacher.middleName.substring(0, 1) + ".";
 
-                    appointment.id,
+            result.add(
 
-                    appointment.teacher.id,
+                    new AppointmentDTO(
 
-                    appointment.student == null ? null : appointment.student.id,
+                            appointment.id,
 
-                    appointment.consultationDay,
+                            appointment.teacher.id,
 
-                    appointment.consultationTime,
+                            appointment.student.id,
 
-                    appointment.status
+                            appointment.consultationDay,
 
-            ));
+                            appointment.consultationTime,
+
+                            appointment.status,
+
+                            teacherName,
+
+                            null
+
+                    )
+
+            );
+
         }
 
         return result;

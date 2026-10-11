@@ -14,15 +14,10 @@ public interface AppointmentRepository
     List<Appointment> findByStudentId(Long studentId);
 
     Optional<Appointment>
-
     findByTeacherIdAndConsultationDayAndConsultationTime(
-
             Long teacherId,
-
             String consultationDay,
-
             String consultationTime
-
     );
 
 }

@@ -1,5 +1,7 @@
-window.onload = () => {
-    initHome(renderSearch);
+window.onload = async () => {
+
+    await initHome(renderSearch);
+
 };
 
 function renderSearch(){
@@ -34,7 +36,7 @@ async function searchTeachers(){
             .value
             .trim();
 
-    if(subject===""){
+    if(subject === ""){
 
         alert("Введіть предмет");
 
@@ -55,24 +57,26 @@ async function searchTeachers(){
 
     }
 
-    const teachers = await response.json();
+    const teachers =
+        await response.json();
 
     const result =
         document.getElementById("searchResult");
 
     result.innerHTML = "";
 
-    if(teachers.length===0){
+    if(teachers.length === 0){
 
         result.innerHTML =
-
-            "<p>Викладачів не знайдено.</p>";
+            `<div class="not-found">
+                Викладачів не знайдено.
+            </div>`;
 
         return;
 
     }
 
-    teachers.forEach(teacher=>{
+    teachers.forEach(teacher => {
 
         result.innerHTML += `
 
@@ -80,16 +84,18 @@ async function searchTeachers(){
                 class="teacher-card"
                 onclick="openTeacher(${teacher.id})">
 
-                <strong>
+                <div class="teacher-name">
 
                     ${teacher.lastName}
                     ${teacher.initials}
 
-                </strong>
+                </div>
 
-                <br>
+                <div class="teacher-subject">
 
-                ${teacher.subject}
+                    ${teacher.subject}
+
+                </div>
 
             </button>
 
@@ -99,6 +105,9 @@ async function searchTeachers(){
 
 }
 
-function openTeacher(id) {
-    location.href = "teacher-profile.html?id=" + id;
+function openTeacher(id){
+
+    location.href =
+        "teacher-profile.html?id=" + id;
+
 }

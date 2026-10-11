@@ -21,7 +21,9 @@ public class AppointmentController {
     public List<AppointmentDTO> getTeacherCalendar(
             @PathVariable Long teacherId
     ) {
+
         return service.getTeacherCalendar(teacherId);
+
     }
 
     @PostMapping("/book")
@@ -31,18 +33,23 @@ public class AppointmentController {
             @RequestParam String day,
             @RequestParam String time
     ) {
+
         return service.bookAppointment(
                 teacherId,
                 studentId,
                 day,
                 time
         );
+
     }
 
     @GetMapping("/student/{studentId}")
     public List<AppointmentDTO> getStudentAppointments(
             @PathVariable Long studentId
     ) {
+
         return service.getStudentAppointments(studentId);
+
     }
+
 }

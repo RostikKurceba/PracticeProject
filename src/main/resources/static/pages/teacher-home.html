@@ -10,23 +10,29 @@
 
 <div class="top-bar">
 
-    <button class="logout-btn" onclick="logout()">Вихід</button>
+    <div class="left-panel">
+        <button class="logout-btn" onclick="logout()">Вихід</button>
+    </div>
 
-    <div class="week-nav">
+    <div class="center-panel">
 
-        <button id="prevWeek" onclick="changeWeek(-1)">◀</button>
+        <div class="week-nav">
 
-        <div id="weekLabel"></div>
+            <button id="prevWeek" onclick="changeWeek(-1)">◀</button>
 
-        <button id="nextWeek" onclick="changeWeek(1)">▶</button>
+            <span id="weekLabel"></span>
+
+            <button id="nextWeek" onclick="changeWeek(1)">▶</button>
+
+        </div>
 
     </div>
 
-    <div id="userLabel"></div>
+    <div class="right-panel">
+        <div id="userLabel"></div>
+    </div>
 
 </div>
-
-<!-- ВИКЛАДАЧ: верх пустий (як ти хотів) -->
 
 <div class="table-wrapper">
     <table id="calendar"></table>

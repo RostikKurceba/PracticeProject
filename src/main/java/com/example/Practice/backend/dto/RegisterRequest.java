@@ -6,6 +6,6 @@ public class RegisterRequest {
     public String middleName;
     public String email;
     public String password;
-    public String role; // "student" або "teacher"
-    public String subject; // тільки для teacher
+    public String role;
+    public String subject;
 }

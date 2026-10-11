@@ -5,52 +5,130 @@ body{
 }
 
 /* верхня панель */
+
 .top-bar{
-    display:flex;
-    justify-content:space-between;
+
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+
     align-items:center;
-    padding:10px 15px;
+
+    padding:10px 18px;
+
     background:white;
-    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+
+    box-shadow:0 2px 6px rgba(0,0,0,.1);
+
 }
 
 /* кнопка виходу */
+
 .logout-btn{
+
     background:red;
     color:white;
+
     border:none;
+
     padding:8px 14px;
-    cursor:pointer;
+
     border-radius:5px;
+
+    cursor:pointer;
+
+    justify-self:start;
+
 }
 
-/* тиждень */
+/* навігація */
+
 .week-nav{
+
     display:flex;
+
     align-items:center;
-    gap:10px;
+
+    justify-content:center;
+
+    gap:18px;
+
 }
 
-/* 🔴 ВИКЛАДАЧ НЕ МАЄ ПОШУКУ */
+#weekLabel{
+
+    width:220px;
+
+    text-align:center;
+
+    white-space:nowrap;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+}
+
+#userLabel{
+
+    justify-self:end;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    white-space:nowrap;
+
+}
 
 /* календар */
+
 .table-wrapper{
     padding:20px;
 }
 
 table{
+
     width:100%;
+
     border-collapse:collapse;
+
     background:white;
+
 }
 
-th, td{
+th,
+td{
+
     border:1px solid #ccc;
+
     text-align:center;
+
     height:40px;
+
 }
 
 th{
+
     background:#1976d2;
+
     color:white;
+
+}
+
+/* зайнята консультація */
+
+.busy{
+
+    background:#ececec;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    white-space:normal;
+
+    word-break:break-word;
+
+    padding:3px;
+
 }
